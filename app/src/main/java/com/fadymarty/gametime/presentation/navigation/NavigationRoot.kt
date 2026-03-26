@@ -26,6 +26,7 @@ import com.fadymarty.gametime.presentation.player_information.PlayerInformationR
 import com.fadymarty.gametime.presentation.schedule_game.ScheduleGameRoot
 import com.fadymarty.gametime.presentation.snackbar.SnackbarController
 import com.fadymarty.gametime.presentation.splash.SplashRoot
+import com.fadymarty.gametime.presentation.statistics.StatisticsRoot
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -136,7 +137,7 @@ fun NavigationRoot() {
                 )
             }
             composable<Route.Statistics> {
-
+                StatisticsRoot()
             }
             composable<Route.DiscoverCombats> {
                 DiscoverCombatsRoot(

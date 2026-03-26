@@ -33,12 +33,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fadymarty.gametime.R
+import com.fadymarty.gametime.common.util.ObserveAsEvents
 import com.fadymarty.uikit.buttons.PrimaryButton
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.uikit.inputs.Input
 import com.fadymarty.uikit.inputs.PasswordInput
-import com.fadymarty.gametime.R
-import com.fadymarty.gametime.common.util.ObserveAsEvents
 import org.koin.compose.viewmodel.koinViewModel
 
 /**

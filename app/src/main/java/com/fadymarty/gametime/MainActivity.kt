@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.gametime.presentation.navigation.NavigationRoot
+import com.fadymarty.uikit.common.theme.GameTimeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

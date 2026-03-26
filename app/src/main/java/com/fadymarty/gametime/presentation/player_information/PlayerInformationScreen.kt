@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -173,7 +174,8 @@ private fun PlayerInformationScreen(
                                 .data(state.imageUri ?: R.drawable.img_profile_pic)
                                 .crossfade(true)
                                 .build(),
-                            contentDescription = null
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
                         )
                         Box(
                             modifier = Modifier
@@ -219,7 +221,7 @@ private fun PlayerInformationScreen(
                                 appendLine("Earned: ")
                                 withStyle(
                                     style = SpanStyle(
-                                        fontWeight = FontWeight.Bold,
+                                        fontWeight = FontWeight.W700,
                                         color = GameTimeTheme.colorScheme.accentInactive
                                     )
                                 ) {
@@ -237,7 +239,7 @@ private fun PlayerInformationScreen(
                                 appendLine("Staked: ")
                                 withStyle(
                                     style = SpanStyle(
-                                        fontWeight = FontWeight.Bold,
+                                        fontWeight = FontWeight.W700,
                                         color = GameTimeTheme.colorScheme.accentInactive
                                     )
                                 ) {
@@ -304,7 +306,7 @@ private fun PlayerInformationScreen(
                     modifier = Modifier.padding(start = 40.dp),
                     text = "Player\nCombats",
                     style = GameTimeTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.W700
                     ),
                     color = GameTimeTheme.colorScheme.accentInactive
                 )

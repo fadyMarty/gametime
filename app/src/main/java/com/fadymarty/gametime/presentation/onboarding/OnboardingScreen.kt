@@ -20,11 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fadymarty.gametime.common.util.ObserveAsEvents
+import com.fadymarty.gametime.presentation.onboarding.components.OnboardingPagerScreen
 import com.fadymarty.uikit.buttons.PrimaryButton
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.uikit.indicator.Pagination
-import com.fadymarty.gametime.common.util.ObserveAsEvents
-import com.fadymarty.gametime.presentation.onboarding.components.OnboardingPagerScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 /**

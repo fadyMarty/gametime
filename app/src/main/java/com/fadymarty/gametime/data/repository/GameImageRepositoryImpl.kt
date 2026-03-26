@@ -35,6 +35,7 @@ class GameImageRepositoryImpl(
                 val bitmap = result.image.toBitmap()
                 val pieceWidth = bitmap.width / 3
                 val pieceHeight = bitmap.height / 3
+
                 val imagePieces = mutableListOf<ImagePiece>()
 
                 for (row in 0 until 3) {
@@ -46,11 +47,11 @@ class GameImageRepositoryImpl(
                             pieceWidth,
                             pieceHeight
                         )
-                        val piece = ImagePiece(
+                        val imagePiece = ImagePiece(
                             index = row * 3 + col,
                             bitmap = pieceBitmap
                         )
-                        imagePieces.add(piece)
+                        imagePieces.add(imagePiece)
                     }
                 }
 
@@ -64,7 +65,8 @@ class GameImageRepositoryImpl(
     }
 
     companion object {
-        private const val IMAGE_URL = "https://static.wikia.nocookie.net/turma-do-kamil/images/5/53/A5f7322cdf21c4de36c7e2c48c926e4c433fe5e4_hq.jpg/revision/latest?cb=20240814003202&path-prefix=pt-br"
+        private const val IMAGE_URL =
+            "https://static.wikia.nocookie.net/turma-do-kamil/images/5/53/A5f7322cdf21c4de36c7e2c48c926e4c433fe5e4_hq.jpg/revision/latest?cb=20240814003202&path-prefix=pt-br"
         private const val TAG = "GameImageRepositoryImpl"
     }
 }

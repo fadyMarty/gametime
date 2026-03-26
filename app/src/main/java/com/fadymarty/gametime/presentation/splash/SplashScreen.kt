@@ -19,10 +19,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.gametime.R
 import com.fadymarty.gametime.common.util.ObserveAsEvents
 import com.fadymarty.gametime.presentation.navigation.Route
+import com.fadymarty.uikit.common.theme.GameTimeTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 /**

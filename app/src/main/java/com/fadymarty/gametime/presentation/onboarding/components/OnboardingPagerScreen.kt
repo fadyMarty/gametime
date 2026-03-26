@@ -15,8 +15,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.gametime.presentation.onboarding.OnboardingPage
+import com.fadymarty.uikit.common.theme.GameTimeTheme
 
 /**
  * Приветственный экран
