@@ -13,13 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.fadymarty.gametime.common.util.ObserveAsEvents
 import com.fadymarty.gametime.presentation.create_account.CreateAccountRoot
+import com.fadymarty.gametime.presentation.discover_combats.DiscoverCombatsRoot
 import com.fadymarty.gametime.presentation.game_circle.GameCircleRoot
 import com.fadymarty.gametime.presentation.game_image.GameImageRoot
 import com.fadymarty.gametime.presentation.landing.LandingRoot
 import com.fadymarty.gametime.presentation.login.LoginRoot
 import com.fadymarty.gametime.presentation.onboarding.OnboardingRoot
+import com.fadymarty.gametime.presentation.player_information.PlayerInformationRoot
 import com.fadymarty.gametime.presentation.schedule_game.ScheduleGameRoot
 import com.fadymarty.gametime.presentation.snackbar.SnackbarController
 import com.fadymarty.gametime.presentation.splash.SplashRoot
@@ -136,7 +139,17 @@ fun NavigationRoot() {
 
             }
             composable<Route.DiscoverCombats> {
-
+                DiscoverCombatsRoot(
+                    onBackClick = {
+                        navController.navigateUp()
+                    },
+                    onPlayerClick = { id ->
+                        navController.navigate(Route.PlayerInformation(id))
+                    },
+                    onNavigate = { route ->
+                        navController.navigate(route)
+                    }
+                )
             }
             composable<Route.ScheduleGame> {
                 ScheduleGameRoot(
@@ -148,8 +161,14 @@ fun NavigationRoot() {
             composable<Route.Chat> {
 
             }
-            composable<Route.Profile> {
-
+            composable<Route.PlayerInformation> {
+                val information = it.toRoute<Route.PlayerInformation>()
+                PlayerInformationRoot(
+                    id = information.id,
+                    onBackClick = {
+                        navController.navigateUp()
+                    }
+                )
             }
             composable<Route.GameImage> {
                 GameImageRoot()

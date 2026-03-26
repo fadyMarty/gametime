@@ -14,10 +14,12 @@ import com.fadymarty.gametime.domain.use_case.settings.SaveOnboardingStateUseCas
 import com.fadymarty.gametime.domain.use_case.validation.ValidateConfirmPasswordUseCase
 import com.fadymarty.gametime.domain.use_case.validation.ValidateEmailUseCase
 import com.fadymarty.gametime.presentation.create_account.CreateAccountViewModel
+import com.fadymarty.gametime.presentation.discover_combats.DiscoverCombatsViewModel
 import com.fadymarty.gametime.presentation.game_circle.GameCircleViewModel
 import com.fadymarty.gametime.presentation.game_image.GameImageViewModel
 import com.fadymarty.gametime.presentation.login.LoginViewModel
 import com.fadymarty.gametime.presentation.onboarding.OnboardingViewModel
+import com.fadymarty.gametime.presentation.player_information.PlayerInformationViewModel
 import com.fadymarty.gametime.presentation.schedule_game.ScheduleGameViewModel
 import com.fadymarty.gametime.presentation.splash.SplashViewModel
 import org.koin.android.ext.koin.androidContext
@@ -56,7 +58,9 @@ val appModule = module {
     viewModelOf(::OnboardingViewModel)
     viewModelOf(::CreateAccountViewModel)
     viewModelOf(::LoginViewModel)
+    viewModelOf(::DiscoverCombatsViewModel)
     viewModelOf(::ScheduleGameViewModel)
+    viewModelOf(::PlayerInformationViewModel)
     viewModelOf(::GameImageViewModel)
     viewModelOf(::GameCircleViewModel)
 }

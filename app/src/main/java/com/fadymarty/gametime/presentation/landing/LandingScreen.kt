@@ -178,8 +178,8 @@ private fun LandingScreen(
                 }
                 BottomBar(
                     modifier = Modifier.align(Alignment.BottomCenter),
-                    onItemClick = { item ->
-                        when (item) {
+                    onScreenClick = { screen ->
+                        when (screen) {
                             BottomBarScreen.Statistics -> {
                                 onEvent(LandingEvent.OnNavigate(Route.Statistics))
                             }
@@ -193,7 +193,11 @@ private fun LandingScreen(
                                 onEvent(LandingEvent.OnNavigate(Route.Chat))
                             }
                             BottomBarScreen.Profile -> {
-                                onEvent(LandingEvent.OnNavigate(Route.Profile))
+                                onEvent(
+                                    LandingEvent.OnNavigate(
+                                        Route.PlayerInformation("current")
+                                    )
+                                )
                             }
                         }
                     }

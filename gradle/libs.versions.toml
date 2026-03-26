@@ -7,7 +7,7 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.13.0"
 kotlin = "2.3.20"
-composeBom = "2026.03.00"
+composeBom = "2026.03.01"
 appcompat = "1.7.1"
 material = "1.13.0"
 
@@ -26,7 +26,11 @@ retrofit = "3.0.0"
 okhttp = "5.3.2"
 datastorePreferences = "1.2.1"
 kotlinxCoroutinesTest = "1.10.2"
+apolloMockserver = "0.3.1"
 truth = "1.4.5"
+
+room = "2.8.4"
+ksp = "2.3.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -65,13 +69,20 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+apollo-mockserver = { module = "com.apollographql.mockserver:apollo-mockserver", version.ref = "apolloMockserver" }
 mockwebserver3 = { module = "com.squareup.okhttp3:mockwebserver3", version.ref = "okhttp" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 
-apollo-graphql = { id = "com.apollographql.apollo", version.ref = "apollo" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+apollo-graphql = { id = "com.apollographql.apollo", version.ref = "apollo" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

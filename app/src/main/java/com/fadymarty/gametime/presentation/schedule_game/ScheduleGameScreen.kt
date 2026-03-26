@@ -2,7 +2,6 @@ package com.fadymarty.gametime.presentation.schedule_game
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -110,7 +109,7 @@ private fun ScheduleGameScreen(
                 modifier = Modifier
                     .size(20.dp, 14.2.dp)
                     .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
+                        interactionSource = null,
                         indication = ripple(bounded = false)
                     ) {
                         onEvent(ScheduleGameEvent.OnBackClick)

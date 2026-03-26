@@ -38,13 +38,10 @@ sealed interface Route {
     data object Chat : Route
 
     @Serializable
-    data object Profile : Route
-
-    @Serializable
     data object CombatInformation : Route
 
     @Serializable
-    data object PlayerInformation : Route
+    data class PlayerInformation(val id: String) : Route
 
     @Serializable
     data object GameImage : Route

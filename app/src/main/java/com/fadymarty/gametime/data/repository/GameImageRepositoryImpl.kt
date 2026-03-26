@@ -1,8 +1,8 @@
 package com.fadymarty.gametime.data.repository
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
-import coil3.Bitmap
 import coil3.ImageLoader
 import coil3.request.ErrorResult
 import coil3.request.ImageRequest
@@ -35,7 +35,6 @@ class GameImageRepositoryImpl(
                 val bitmap = result.image.toBitmap()
                 val pieceWidth = bitmap.width / 3
                 val pieceHeight = bitmap.height / 3
-
                 val imagePieces = mutableListOf<ImagePiece>()
 
                 for (row in 0 until 3) {
@@ -54,6 +53,7 @@ class GameImageRepositoryImpl(
                         imagePieces.add(piece)
                     }
                 }
+
                 return Result.Success(imagePieces)
             }
             is ErrorResult -> {
