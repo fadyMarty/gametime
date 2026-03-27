@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +27,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.fadymarty.uikit.common.theme.GameTimePalette
 import com.fadymarty.uikit.common.theme.GameTimeTheme
+import java.util.Locale
 
 /**
  * График статистики суммы заработанных баллов
@@ -43,6 +43,8 @@ fun WeekEarningsChart(
     earnings: List<Float>,
     modifier: Modifier = Modifier,
 ) {
+    val totalPrice = earnings.sum()
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -58,21 +60,21 @@ fun WeekEarningsChart(
                 top = 13.dp,
                 end = 23.dp,
                 bottom = 10.dp
-            )
+            ),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
         Text(
             text = "THIS WEEK EARNINGS",
             style = GameTimeTheme.typography.caption2Regular,
             color = GameTimeTheme.colorScheme.onAccent
         )
-        Spacer(modifier = Modifier.height(14.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(23.dp),
             verticalAlignment = Alignment.Bottom
         ) {
             Text(
-                text = $$"$240.00",
+                text = formatTotalPrice(totalPrice),
                 style = GameTimeTheme.typography.title1Extrabold.copy(
                     fontWeight = FontWeight.W700,
                     fontSize = 30.sp,
@@ -89,20 +91,17 @@ fun WeekEarningsChart(
                 val maxValue = earnings.max()
                 val minValue = earnings.min()
                 val range = maxValue - minValue
-                val xStep = size.width / (earnings.size - 1)
+                val stepX = size.width / (earnings.size - 1)
 
                 val points = earnings.mapIndexed { index, value ->
                     Offset(
-                        x = index * xStep,
+                        x = index * stepX,
                         y = size.height - ((value - minValue) / range * size.height)
                     )
                 }
 
                 val path = Path().apply {
-                    moveTo(
-                        x = points.first().x,
-                        y = points.first().y
-                    )
+                    moveTo(points.first().x, points.first().y)
 
                     for (index in 0 until points.size - 1) {
                         val current = points[index]
@@ -132,6 +131,10 @@ fun WeekEarningsChart(
             }
         }
     }
+}
+
+private fun formatTotalPrice(price: Float): String {
+    return String.format(Locale.ENGLISH, "$%.2f", price)
 }
 
 @Preview(showBackground = true)
