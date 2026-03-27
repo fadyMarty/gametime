@@ -24,6 +24,7 @@ class GameImageViewModel(
     val state = _state.asStateFlow()
 
     private var timerJob: Job? = null
+    private var isCompletedJob: Job? = null
 
     init {
         getImagePieces()
@@ -41,11 +42,12 @@ class GameImageViewModel(
                             }
                     )
                 }
-                checkIsCompleted()
+                isCompleted()
             }
             GameImageEvent.OnCheckClick -> {
-                checkIsCompleted()
+                isCompleted()
             }
+            else -> Unit
         }
     }
 
@@ -77,15 +79,23 @@ class GameImageViewModel(
         }
     }
 
-    private fun checkIsCompleted() {
-        val isCompleted = _state.value.imagePieces
-            .mapIndexed { index, piece ->
-                piece.index == index
-            }.all { it }
-        _state.update {
-            it.copy(
-                isCompleted = isCompleted
-            )
+    private fun isCompleted() {
+        isCompletedJob?.cancel()
+        isCompletedJob = viewModelScope.launch {
+            val isCompleted = _state.value.imagePieces
+                .mapIndexed { index, piece ->
+                    piece.index == index
+                }.all { it }
+            if (isCompleted) {
+                timerJob?.cancel()
+            }
+            delay(2000L)
+            _state.update {
+                it.copy(
+                    isCompleted = isCompleted
+                )
+            }
+
         }
     }
 }

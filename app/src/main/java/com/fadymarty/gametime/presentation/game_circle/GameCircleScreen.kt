@@ -20,8 +20,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.fadymarty.gametime.presentation.components.SuccessScreen
 import com.fadymarty.uikit.buttons.PrimaryButton
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.uikit.timer.Timer
@@ -34,13 +36,22 @@ import org.koin.compose.viewmodel.koinViewModel
  */
 @Composable
 fun GameCircleRoot(
+    onCloseClick: () -> Unit,
     viewModel: GameCircleViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     GameCircleScreen(
         state = state,
-        onEvent = viewModel::onEvent
+        onEvent = { event ->
+            when (event) {
+                GameCircleEvent.OnCloseClick -> {
+                    onCloseClick()
+                }
+                else -> Unit
+            }
+            viewModel.onEvent(event)
+        }
     )
 }
 
@@ -52,6 +63,11 @@ private fun GameCircleScreen(
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
+                .then(
+                    if (state.isCompleted) {
+                        Modifier.blur(14.dp)
+                    } else Modifier
+                )
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(top = 11.dp, bottom = 69.dp),
@@ -120,6 +136,19 @@ private fun GameCircleScreen(
                 label = "Surrender",
                 onClick = {
                     onEvent(GameCircleEvent.OnCheckClick)
+                }
+            )
+        }
+
+        if (state.isCompleted) {
+            SuccessScreen(
+                onCloseClick = {
+                    onEvent(GameCircleEvent.OnCloseClick)
+                },
+                title = "You Winner",
+                buttonLabel = "Discover combats",
+                onButtonClick = {
+                    onEvent(GameCircleEvent.OnCloseClick)
                 }
             )
         }

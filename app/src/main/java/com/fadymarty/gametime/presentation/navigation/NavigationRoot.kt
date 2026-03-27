@@ -172,10 +172,18 @@ fun NavigationRoot() {
                 )
             }
             composable<Route.GameImage> {
-                GameImageRoot()
+                GameImageRoot(
+                    onCloseClick = {
+                        navController.navigateUp()
+                    }
+                )
             }
             composable<Route.GameCircle> {
-                GameCircleRoot()
+                GameCircleRoot(
+                    onCloseClick = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }

@@ -6,4 +6,5 @@ sealed interface GameCircleEvent {
     data class OnGenerateCircles(val width: Int, val height: Int) : GameCircleEvent
     data class OnCircleClick(val circle: Circle) : GameCircleEvent
     data object OnCheckClick : GameCircleEvent
+    data object OnCloseClick : GameCircleEvent
 }

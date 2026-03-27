@@ -24,6 +24,7 @@ class GameCircleViewModel : ViewModel() {
     val state = _state.asStateFlow()
 
     private var timerJob: Job? = null
+    private var isCompletedJob: Job? = null
 
     fun onEvent(event: GameCircleEvent) {
         when (event) {
@@ -53,19 +54,16 @@ class GameCircleViewModel : ViewModel() {
                         }
                         it.copy(
                             circles = circles,
-                            collectedCircles = collectedCircles,
-                            isCompleted = _state.value.circles.isEmpty()
+                            collectedCircles = collectedCircles
                         )
                     }
+                    isCompleted()
                 }
             }
             GameCircleEvent.OnCheckClick -> {
-                _state.update {
-                    it.copy(
-                        isCompleted = _state.value.circles.isEmpty()
-                    )
-                }
+                isCompleted()
             }
+            else -> Unit
         }
     }
 
@@ -76,6 +74,22 @@ class GameCircleViewModel : ViewModel() {
                 delay(1000)
                 _state.value = _state.value.copy(
                     seconds = _state.value.seconds + 1
+                )
+            }
+        }
+    }
+
+    private fun isCompleted() {
+        isCompletedJob?.cancel()
+        isCompletedJob = viewModelScope.launch {
+            val isCompleted = _state.value.circles.isEmpty()
+            if (isCompleted) {
+                timerJob?.cancel()
+            }
+            delay(2000L)
+            _state.update {
+                it.copy(
+                    isCompleted = isCompleted
                 )
             }
         }
