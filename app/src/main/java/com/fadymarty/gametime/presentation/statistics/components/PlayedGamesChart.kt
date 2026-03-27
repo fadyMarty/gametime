@@ -13,44 +13,31 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 
-/**
- * Donut-график выигранных игр
- *
- * Дата создания: 26-03-2026
- * Автор создания: 1
- *
- * @param modifier модификатор
- * @param imageWinPercentage процент выигрышей в играх категории Image
- * @param circleWinPercentage процент выигрышей в играх категории Circle
- */
 @Composable
 fun PlayedGamesChart(
-    modifier: Modifier = Modifier,
-    imageWinPercentage: Float,
     circleWinPercentage: Float,
+    imageWinPercentage: Float,
+    modifier: Modifier = Modifier,
 ) {
-    val averagePercentage = (imageWinPercentage + circleWinPercentage) / 2
+    val averageWinPercentage = (circleWinPercentage + imageWinPercentage) / 2
 
     Box(
         modifier = modifier.size(250.dp),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.Center
     ) {
-        Canvas(
-            modifier = Modifier.size(150.dp)
-        ) {
+        Canvas(modifier = Modifier.size(150.dp)) {
             drawCircle(
                 color = Color(0xFFBDBDBD),
                 alpha = 0.2f,
-                radius = size.minDimension / 2f,
                 style = Stroke(width = 15.dp.toPx())
             )
             drawArc(
-                brush = Brush.horizontalGradient(
+                brush = Brush.linearGradient(
                     colors = listOf(
                         Color(0xFFF22E63),
                         Color(0xFFF22E63).copy(alpha = 0.5f)
@@ -74,22 +61,21 @@ fun PlayedGamesChart(
                 style = Stroke(width = 30.dp.toPx())
             )
         }
-
         Row(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "%.1f".format(averagePercentage * 100),
-                style = GameTimeTheme.typography.captionSemibold.copy(
-                    fontWeight = FontWeight.W700
-                )
+                text = "%.1f".format(averageWinPercentage * 100),
+                style = GameTimeTheme.typography.captionSemibold,
+                textAlign = TextAlign.Center
             )
             Text(
                 modifier = Modifier.alpha(0.2f),
                 text = "%",
                 style = GameTimeTheme.typography.caption2Bold,
-                color = GameTimeTheme.colorScheme.onBackground
+                color = GameTimeTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center
             )
         }
     }
@@ -100,8 +86,8 @@ fun PlayedGamesChart(
 private fun PlayedGamesChartPreview() {
     GameTimeTheme {
         PlayedGamesChart(
-            imageWinPercentage = 0.5f,
-            circleWinPercentage = 0.25f
+            circleWinPercentage = 0.25f,
+            imageWinPercentage = 0.5f
         )
     }
 }

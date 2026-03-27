@@ -41,17 +41,10 @@ class GameImageViewModel(
                             }
                     )
                 }
+                checkIsCompleted()
             }
             GameImageEvent.OnCheckClick -> {
-                val isSolved = _state.value.imagePieces
-                    .mapIndexed { index, piece ->
-                        piece.index == index
-                    }.all { it }
-                _state.update {
-                    it.copy(
-                        isSolved = isSolved
-                    )
-                }
+                checkIsCompleted()
             }
         }
     }
@@ -81,6 +74,18 @@ class GameImageViewModel(
                     )
                 }
             }
+        }
+    }
+
+    private fun checkIsCompleted() {
+        val isCompleted = _state.value.imagePieces
+            .mapIndexed { index, piece ->
+                piece.index == index
+            }.all { it }
+        _state.update {
+            it.copy(
+                isCompleted = isCompleted
+            )
         }
     }
 }

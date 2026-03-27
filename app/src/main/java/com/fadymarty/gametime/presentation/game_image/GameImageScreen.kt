@@ -104,6 +104,7 @@ private fun GameImageScreen(
             }
             Spacer(modifier = Modifier.weight(1f))
             PrimaryButton(
+                modifier = Modifier.padding(horizontal = 40.dp),
                 label = "Surrender",
                 onClick = {
                     onEvent(GameImageEvent.OnCheckClick)

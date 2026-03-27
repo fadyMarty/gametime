@@ -1,7 +1,10 @@
 package com.fadymarty.gametime.presentation.statistics
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
@@ -9,10 +12,12 @@ import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,13 +25,19 @@ import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import com.fadymarty.gametime.R
 import com.fadymarty.gametime.presentation.statistics.components.PlayedGamesChart
 import com.fadymarty.gametime.presentation.statistics.components.ScheduledGamesChart
+import com.fadymarty.gametime.presentation.statistics.components.WeekEarningsChart
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 
 /**
@@ -79,6 +90,53 @@ private fun StatisticsScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
             }
             item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = GameTimeTheme.colorScheme.accent
+                            )
+                        )
+                        .padding(
+                            start = 16.dp,
+                            top = 13.dp,
+                            end = 23.dp,
+                            bottom = 10.dp
+                        )
+                ) {
+                    Text(
+                        text = "THIS WEEK EARNINGS",
+                        style = GameTimeTheme.typography.caption2Regular,
+                        color = GameTimeTheme.colorScheme.onAccent
+                    )
+                    Spacer(modifier = Modifier.height(14.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(23.dp),
+                        verticalAlignment = Alignment.Bottom
+                    ) {
+                        Text(
+                            text = $$"$240.00",
+                            style = GameTimeTheme.typography.title1Extrabold.copy(
+                                fontWeight = FontWeight.W700,
+                                fontSize = 30.sp,
+                                lineHeight = 1.em,
+                                letterSpacing = 0.003.em
+                            ),
+                            color = GameTimeTheme.colorScheme.onAccent
+                        )
+                        WeekEarningsChart(
+                            modifier = Modifier.weight(1f),
+                            earnings = listOf(10f, 100f, 10f, 100f, 10f, 100f, 10f)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(26.dp))
+            }
+            item {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Played Games",
@@ -86,8 +144,8 @@ private fun StatisticsScreen() {
                     color = GameTimeTheme.colorScheme.accentInactive
                 )
                 PlayedGamesChart(
-                    imageWinPercentage = 0.5f,
-                    circleWinPercentage = 0.25f
+                    circleWinPercentage = 0.25f,
+                    imageWinPercentage = 0.5f
                 )
                 Spacer(modifier = Modifier.height(4.dp))
             }

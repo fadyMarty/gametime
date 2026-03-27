@@ -77,8 +77,8 @@ private fun GameCircleScreen(
                 LaunchedEffect(Unit) {
                     onEvent(
                         GameCircleEvent.OnGenerateCircles(
-                            width = maxWidth.value,
-                            height = maxHeight.value
+                            width = maxWidth.value.toInt(),
+                            height = maxHeight.value.toInt()
                         )
                     )
                 }
@@ -87,9 +87,9 @@ private fun GameCircleScreen(
                     Box(
                         modifier = Modifier
                             .offset(circle.x.dp, circle.y.dp)
-                            .size(circle.diameter.dp)
+                            .size(circle.config.diameter.dp)
                             .border(
-                                width = circle.borderWidth.dp,
+                                width = circle.config.borderWidth.dp,
                                 color = GameTimeTheme.colorScheme.accentInactive,
                                 shape = CircleShape
                             )
@@ -106,9 +106,9 @@ private fun GameCircleScreen(
                     Box(
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .size(circle.diameter.dp)
+                            .size(circle.config.diameter.dp)
                             .border(
-                                width = circle.borderWidth.dp,
+                                width = circle.config.borderWidth.dp,
                                 color = GameTimeTheme.colorScheme.accentInactive,
                                 shape = CircleShape
                             )
@@ -116,6 +116,7 @@ private fun GameCircleScreen(
                 }
             }
             PrimaryButton(
+                modifier = Modifier.padding(horizontal = 80.dp),
                 label = "Surrender",
                 onClick = {
                     onEvent(GameCircleEvent.OnCheckClick)

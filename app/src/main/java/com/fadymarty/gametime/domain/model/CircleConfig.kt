@@ -1,44 +1,44 @@
 package com.fadymarty.gametime.domain.model
 
-data class CircleTemplate(
+data class CircleConfig(
     val diameter: Int,
     val borderWidth: Int,
 )
 
-val circleTemplates = listOf(
-    CircleTemplate(
+val circleConfigs = listOf(
+    CircleConfig(
         diameter = 150,
         borderWidth = 15
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 110,
         borderWidth = 6
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 89,
         borderWidth = 6
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 72,
         borderWidth = 3
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 61,
         borderWidth = 3
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 49,
         borderWidth = 3
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 38,
         borderWidth = 3
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 27,
         borderWidth = 3
     ),
-    CircleTemplate(
+    CircleConfig(
         diameter = 17,
         borderWidth = 3
     )

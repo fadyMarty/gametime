@@ -3,7 +3,7 @@ package com.fadymarty.gametime.presentation.game_circle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadymarty.gametime.domain.model.Circle
-import com.fadymarty.gametime.domain.model.circleTemplates
+import com.fadymarty.gametime.domain.model.circleConfigs
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,12 +29,11 @@ class GameCircleViewModel : ViewModel() {
         when (event) {
             is GameCircleEvent.OnGenerateCircles -> {
                 _state.value = GameCircleState(
-                    circles = circleTemplates.map { template ->
-                        val maxX = event.width.toInt() - template.diameter
-                        val maxY = event.height.toInt() - template.diameter
+                    circles = circleConfigs.map { template ->
+                        val maxX = event.width - template.diameter
+                        val maxY = event.height - template.diameter
                         Circle(
-                            diameter = template.diameter,
-                            borderWidth = template.borderWidth,
+                            config = template,
                             x = Random.nextInt(maxX),
                             y = Random.nextInt(maxY)
                         )
@@ -43,20 +42,19 @@ class GameCircleViewModel : ViewModel() {
                 startTimer()
             }
             is GameCircleEvent.OnCircleClick -> {
-                val maxDiameterCircle = _state.value.circles.maxBy { it.diameter }
+                val maxDiameterCircle = _state.value.circles.maxBy { it.config.diameter }
                 if (event.circle == maxDiameterCircle) {
                     _state.update {
+                        val circles = it.circles.toMutableList().apply {
+                            remove(event.circle)
+                        }
+                        val collectedCircles = it.collectedCircles.toMutableList().apply {
+                            add(event.circle)
+                        }
                         it.copy(
-                            circles = it.circles
-                                .toMutableList()
-                                .apply {
-                                    remove(event.circle)
-                                },
-                            collectedCircles = it.collectedCircles
-                                .toMutableList()
-                                .apply {
-                                    add(event.circle)
-                                }
+                            circles = circles,
+                            collectedCircles = collectedCircles,
+                            isCompleted = _state.value.circles.isEmpty()
                         )
                     }
                 }
@@ -64,7 +62,7 @@ class GameCircleViewModel : ViewModel() {
             GameCircleEvent.OnCheckClick -> {
                 _state.update {
                     it.copy(
-                        isSolved = _state.value.circles.isEmpty()
+                        isCompleted = _state.value.circles.isEmpty()
                     )
                 }
             }

@@ -4,6 +4,6 @@ import com.fadymarty.gametime.domain.model.ImagePiece
 
 data class GameImageState(
     val imagePieces: List<ImagePiece> = emptyList(),
-    val isSolved: Boolean = false,
+    val isCompleted: Boolean = false,
     val seconds: Int = 0,
 )
