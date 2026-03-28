@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import coil3.ImageLoader
 import com.fadymarty.gametime.common.util.Constants
-import com.fadymarty.gametime.data.repository.GameImageRepositoryImpl
+import com.fadymarty.gametime.data.repository.GameRepositoryImpl
 import com.fadymarty.gametime.data.repository.SettingsRepositoryImpl
 import com.fadymarty.gametime.domain.repository.GameRepository
 import com.fadymarty.gametime.domain.repository.SettingsRepository
@@ -44,7 +44,7 @@ val appModule = module {
     }
 
     singleOf(::SettingsRepositoryImpl) { bind<SettingsRepository>() }
-    singleOf(::GameImageRepositoryImpl) { bind<GameRepository>() }
+    singleOf(::GameRepositoryImpl) { bind<GameRepository>() }
 
     factoryOf(::SaveOnboardingStateUseCase)
     factoryOf(::ReadOnboardingStateUseCase)

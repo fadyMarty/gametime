@@ -16,7 +16,7 @@ import com.fadymarty.gametime.domain.repository.GameRepository
 /**
  * Репозиторий для загрузки изображения для игры категории Image
  */
-class GameImageRepositoryImpl(
+class GameRepositoryImpl(
     private val context: Context,
     private val imageLoader: ImageLoader,
 ) : GameRepository {
@@ -36,7 +36,7 @@ class GameImageRepositoryImpl(
                 val pieceWidth = bitmap.width / 3
                 val pieceHeight = bitmap.height / 3
 
-                val imagePieces = mutableListOf<ImagePiece>()
+                val pieces = mutableListOf<ImagePiece>()
 
                 for (row in 0 until 3) {
                     for (col in 0 until 3) {
@@ -47,15 +47,15 @@ class GameImageRepositoryImpl(
                             pieceWidth,
                             pieceHeight
                         )
-                        val imagePiece = ImagePiece(
+                        val piece = ImagePiece(
                             index = row * 3 + col,
                             bitmap = pieceBitmap
                         )
-                        imagePieces.add(imagePiece)
+                        pieces.add(piece)
                     }
                 }
 
-                return Result.Success(imagePieces)
+                return Result.Success(pieces)
             }
             is ErrorResult -> {
                 Log.e(TAG, "Ошибка — Не удалось загрузить изображение")
