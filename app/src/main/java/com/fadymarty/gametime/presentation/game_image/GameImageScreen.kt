@@ -110,7 +110,9 @@ private fun GameImageScreen(
                         Image(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .draggableHandle(),
+                                .draggableHandle(
+                                    enabled = !state.isCompleted
+                                ),
                             bitmap = piece.bitmap.asImageBitmap(),
                             contentDescription = null,
                             contentScale = ContentScale.FillWidth

@@ -3,8 +3,6 @@ package com.fadymarty.gametime.presentation.splash
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -54,7 +52,12 @@ private fun SplashScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.linearGradient(GameTimeTheme.colorScheme.accent))
+            .background(
+                brush = Brush.linearGradient(
+                    colors = GameTimeTheme.colorScheme.accent
+                )
+            ),
+        contentAlignment = Alignment.Center
     ) {
         Image(
             modifier = Modifier
@@ -64,19 +67,12 @@ private fun SplashScreen() {
             contentDescription = null,
             contentScale = ContentScale.FillWidth
         )
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                modifier = Modifier.size(173.91.dp, 100.85.dp),
-                imageVector = ImageVector.vectorResource(R.drawable.ic_logo),
-                contentDescription = null,
-                tint = GameTimeTheme.colorScheme.onAccent
-            )
-            Spacer(modifier = Modifier.weight(2f))
-        }
+        Icon(
+            modifier = Modifier.size(173.91.dp, 100.85.dp),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_logo),
+            contentDescription = null,
+            tint = GameTimeTheme.colorScheme.onAccent
+        )
     }
 }
 

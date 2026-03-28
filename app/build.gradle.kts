@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.imagepickerkmp)
+    implementation(libs.analytics)
 
     implementation(project(":uikit"))
 }

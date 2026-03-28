@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fadymarty.gametime.common.util.onSuccess
 import com.fadymarty.gametime.domain.use_case.game.GetImagePiecesUseCase
+import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,6 +44,7 @@ class GameImageViewModel(
                     )
                 }
                 isCompleted()
+                AppMetrica.reportEvent("Image piece moved")
             }
             GameImageEvent.OnCheckClick -> {
                 isCompleted()
@@ -88,6 +90,7 @@ class GameImageViewModel(
                 }.all { it }
             if (isCompleted) {
                 timerJob?.cancel()
+                AppMetrica.reportEvent("Player successfully completed game")
             }
             delay(2000L)
             _state.update {
@@ -95,7 +98,6 @@ class GameImageViewModel(
                     isCompleted = isCompleted
                 )
             }
-
         }
     }
 }
