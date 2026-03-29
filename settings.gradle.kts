@@ -35,7 +35,7 @@ private fun initSubmodules() {
     val submodulePaths = listOf("gametime_uikit")
 
     val needsInit = submodulePaths.any { path ->
-        File(path).listFiles().isEmpty()
+        File(path).listFiles()?.isEmpty() ?: false
     }
 
     if (needsInit) {
