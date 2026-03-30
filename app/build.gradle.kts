@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.apollo.graphql)
 }
 
 android {
@@ -64,8 +65,16 @@ dependencies {
     implementation(libs.reorderable)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.pdf.viewer)
     implementation(libs.imagepickerkmp)
     implementation(libs.analytics)
+
+    implementation(libs.koin.android)
+    implementation(libs.apollo.runtime)
+    implementation(libs.androidx.datastore.preferences)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.apollo.mockserver)
+    testImplementation(libs.truth)
 
     implementation(project(":uikit"))
 }

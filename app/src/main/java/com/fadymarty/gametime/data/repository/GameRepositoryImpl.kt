@@ -33,19 +33,23 @@ class GameRepositoryImpl(
         when (val result = imageLoader.execute(request)) {
             is SuccessResult -> {
                 val bitmap = result.image.toBitmap()
-                val pieceWidth = bitmap.width / 3
-                val pieceHeight = bitmap.height / 3
+                val size = minOf(bitmap.width, bitmap.height)
+                val xStart = (bitmap.width - size) / 2
+                val yStart = (bitmap.height - size) / 2
 
+                val squareBitmap = Bitmap.createBitmap(bitmap, xStart, yStart, size, size)
+
+                val pieceSize = squareBitmap.width / 3
                 val pieces = mutableListOf<ImagePiece>()
 
                 for (row in 0 until 3) {
                     for (col in 0 until 3) {
                         val pieceBitmap = Bitmap.createBitmap(
-                            bitmap,
-                            col * pieceWidth,
-                            row * pieceHeight,
-                            pieceWidth,
-                            pieceHeight
+                            squareBitmap,
+                            col * pieceSize,
+                            row * pieceSize,
+                            pieceSize,
+                            pieceSize
                         )
                         val piece = ImagePiece(
                             index = row * 3 + col,
@@ -66,7 +70,7 @@ class GameRepositoryImpl(
 
     companion object {
         private const val IMAGE_URL =
-            "https://static.wikia.nocookie.net/turma-do-kamil/images/5/53/A5f7322cdf21c4de36c7e2c48c926e4c433fe5e4_hq.jpg/revision/latest?cb=20240814003202&path-prefix=pt-br"
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn74k9jrdLZiWw0dCfb06gfj7SzsJbSBR0cQ&s"
         private const val TAG = "GameImageRepositoryImpl"
     }
 }
