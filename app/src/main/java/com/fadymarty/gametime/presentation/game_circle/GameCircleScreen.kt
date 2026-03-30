@@ -1,7 +1,11 @@
 package com.fadymarty.gametime.presentation.game_circle
 
+import android.content.ClipData
+import android.content.ClipDescription
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.draganddrop.dragAndDropSource
+import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -18,13 +22,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draganddrop.DragAndDropEvent
+import androidx.compose.ui.draganddrop.DragAndDropTarget
+import androidx.compose.ui.draganddrop.DragAndDropTransferData
+import androidx.compose.ui.draganddrop.mimeTypes
+import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fadymarty.gametime.presentation.components.SuccessScreen
 import com.fadymarty.uikit.buttons.PrimaryButton
+import com.fadymarty.uikit.common.theme.GameTimePalette
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.uikit.timer.Timer
 import org.koin.compose.viewmodel.koinViewModel
@@ -55,6 +67,7 @@ fun GameCircleRoot(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun GameCircleScreen(
     state: GameCircleState,
@@ -93,10 +106,50 @@ private fun GameCircleScreen(
                 LaunchedEffect(Unit) {
                     onEvent(
                         GameCircleEvent.OnGenerateCircles(
-                            width = maxWidth.value.toInt(),
-                            height = maxHeight.value.toInt()
+                            areaWidth = maxWidth.value.toInt(),
+                            areaHeight = maxHeight.value.toInt()
                         )
                     )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(150.dp)
+                        .dragAndDropTarget(
+                            shouldStartDragAndDrop = { event ->
+                                event
+                                    .mimeTypes()
+                                    .contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                            },
+                            target = remember {
+                                object : DragAndDropTarget {
+                                    override fun onDrop(event: DragAndDropEvent): Boolean {
+                                        val circleId = event.toAndroidDragEvent()
+                                            .clipData
+                                            ?.getItemAt(0)
+                                            ?.text
+                                            ?.toString()
+                                            ?.toInt()
+                                        onEvent(GameCircleEvent.OnCircleDrop(circleId!!))
+                                        return true
+                                    }
+                                }
+                            }
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    state.collectedCircles.forEach { circle ->
+                        Box(
+                            modifier = Modifier
+                                .size(circle.config.diameter.dp)
+                                .border(
+                                    width = circle.config.borderWidth.dp,
+                                    color = GameTimeTheme.colorScheme.accentInactive,
+                                    shape = CircleShape
+                                )
+                        )
+                    }
                 }
 
                 state.circles.forEach { circle ->
@@ -109,28 +162,27 @@ private fun GameCircleScreen(
                                 color = GameTimeTheme.colorScheme.accentInactive,
                                 shape = CircleShape
                             )
-                            .clickable(
-                                interactionSource = null,
-                                indication = null
-                            ) {
-                                onEvent(GameCircleEvent.OnCircleClick(circle))
+                            .dragAndDropSource(
+                                drawDragDecoration = {
+                                    val borderWidth = circle.config.borderWidth.dp.toPx()
+                                    drawCircle(
+                                        color = GameTimePalette.AccentInactive,
+                                        radius = (circle.config.diameter.dp.toPx() / 2) - borderWidth / 2,
+                                        style = Stroke(borderWidth)
+                                    )
+                                }
+                            ) { _ ->
+                                DragAndDropTransferData(
+                                    clipData = ClipData.newPlainText(
+                                        "circle_id",
+                                        circle.id.toString()
+                                    )
+                                )
                             }
                     )
                 }
-
-                state.collectedCircles.forEach { circle ->
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(circle.config.diameter.dp)
-                            .border(
-                                width = circle.config.borderWidth.dp,
-                                color = GameTimeTheme.colorScheme.accentInactive,
-                                shape = CircleShape
-                            )
-                    )
-                }
             }
+
             PrimaryButton(
                 modifier = Modifier.padding(horizontal = 80.dp),
                 label = "Surrender",

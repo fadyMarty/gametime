@@ -29,28 +29,31 @@ class GameCircleViewModel : ViewModel() {
     fun onEvent(event: GameCircleEvent) {
         when (event) {
             is GameCircleEvent.OnGenerateCircles -> {
-                _state.value = GameCircleState(
-                    circles = circleConfigs.map { template ->
-                        val maxX = event.width - template.diameter
-                        val maxY = event.height - template.diameter
-                        Circle(
-                            config = template,
-                            x = Random.nextInt(maxX),
-                            y = Random.nextInt(maxY)
-                        )
-                    }
-                )
+                val circles = circleConfigs.mapIndexed { index, config ->
+                    Circle(
+                        id = index,
+                        config = config,
+                        x = Random.nextInt(event.areaWidth - config.diameter),
+                        y = Random.nextInt(event.areaHeight - config.diameter)
+                    )
+                }
+                _state.update {
+                    it.copy(
+                        circles = circles
+                    )
+                }
                 startTimer()
             }
-            is GameCircleEvent.OnCircleClick -> {
-                val maxDiameterCircle = _state.value.circles.maxBy { it.config.diameter }
-                if (event.circle == maxDiameterCircle) {
+            is GameCircleEvent.OnCircleDrop -> {
+                val circle = _state.value.circles.first { it.id == event.id }
+                val maxDiameterCircle = _state.value.circles.maxByOrNull { it.config.diameter }
+                if (circle == maxDiameterCircle) {
                     _state.update {
                         val circles = it.circles.toMutableList().apply {
-                            remove(event.circle)
+                            remove(circle)
                         }
                         val collectedCircles = it.collectedCircles.toMutableList().apply {
-                            add(event.circle)
+                            add(circle)
                         }
                         it.copy(
                             circles = circles,

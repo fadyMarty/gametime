@@ -1,7 +1,8 @@
 package com.fadymarty.gametime.domain.model
 
 data class Circle(
-    val config: CircleConfig,
+    val id: Int,
     val x: Int,
     val y: Int,
+    val config: CircleConfig,
 )
