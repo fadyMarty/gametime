@@ -31,12 +31,10 @@ import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fadymarty.gametime.presentation.components.SuccessScreen
 import com.fadymarty.uikit.buttons.PrimaryButton
-import com.fadymarty.uikit.common.theme.GameTimePalette
 import com.fadymarty.uikit.common.theme.GameTimeTheme
 import com.fadymarty.uikit.timer.Timer
 import org.koin.compose.viewmodel.koinViewModel
@@ -157,21 +155,7 @@ private fun GameCircleScreen(
                         modifier = Modifier
                             .offset(circle.x.dp, circle.y.dp)
                             .size(circle.config.diameter.dp)
-                            .border(
-                                width = circle.config.borderWidth.dp,
-                                color = GameTimeTheme.colorScheme.accentInactive,
-                                shape = CircleShape
-                            )
-                            .dragAndDropSource(
-                                drawDragDecoration = {
-                                    val borderWidth = circle.config.borderWidth.dp.toPx()
-                                    drawCircle(
-                                        color = GameTimePalette.AccentInactive,
-                                        radius = (circle.config.diameter.dp.toPx() / 2) - borderWidth / 2,
-                                        style = Stroke(borderWidth)
-                                    )
-                                }
-                            ) { _ ->
+                            .dragAndDropSource { _ ->
                                 DragAndDropTransferData(
                                     clipData = ClipData.newPlainText(
                                         "circle_id",
@@ -179,7 +163,17 @@ private fun GameCircleScreen(
                                     )
                                 )
                             }
-                    )
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .border(
+                                    width = circle.config.borderWidth.dp,
+                                    color = GameTimeTheme.colorScheme.accentInactive,
+                                    shape = CircleShape
+                                )
+                        )
+                    }
                 }
             }
 
