@@ -10,9 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,6 +52,32 @@ fun PlayedGamesChart(
                 useCenter = false,
                 style = Stroke(width = 45.dp.toPx())
             )
+            drawIntoCanvas { canvas ->
+                val paint = Paint().apply {
+                    asFrameworkPaint().apply {
+                        isAntiAlias = true
+                        color = android.graphics.Color.TRANSPARENT
+                        style = android.graphics.Paint.Style.STROKE
+                        strokeWidth = 30.dp.toPx()
+                        setShadowLayer(
+                            55.72f,
+                            0f,
+                            47.76f,
+                            Color(0xFF3495EF).copy(alpha = 0.25f).toArgb()
+                        )
+                    }
+                }
+                canvas.drawArc(
+                    rect = Rect(
+                        center = center,
+                        radius = size.minDimension / 2
+                    ),
+                    startAngle = 270f,
+                    sweepAngle = 360f * circleWinPercentage,
+                    useCenter = false,
+                    paint = paint
+                )
+            }
             drawArc(
                 brush = Brush.linearGradient(
                     colors = listOf(
