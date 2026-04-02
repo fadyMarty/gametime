@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -60,16 +59,12 @@ fun ScheduledGamesChart(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Box(
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(114.dp)
-                            .clip(RoundedCornerShape(46.dp))
-                            .background(Color(0xFFECECEC)),
+                        modifier = Modifier.height(114.dp),
                         contentAlignment = Alignment.BottomCenter
                     ) {
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth()
+                                .width(20.dp)
                                 .fillMaxHeight(value)
                                 .clip(RoundedCornerShape(46.dp))
                                 .background(Color(0xFFFF6978))

@@ -75,7 +75,6 @@ fun PlayedGamesChart(
                     useCenter = false,
                     paint = shadowPaint
                 )
-
             }
             drawArc(
                 brush = Brush.linearGradient(
